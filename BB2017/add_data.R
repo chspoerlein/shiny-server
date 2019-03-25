@@ -49,7 +49,7 @@ wp[c(4,5,10),4] <- 49.9087
 
 
 
-register_google(key="AIzaSyDEVZ1hH3_-UAyWOLmg4Zs2kAow8ABgs34", write=T)
+
 map <- get_stamenmap(c(left = 10.82637, bottom = 49.84269, right = 10.96076, top = 49.92888), #"Bamberg",
                      maptype = "toner-lite", zoom=13, source="stamen", color="bw", force=T)
 
