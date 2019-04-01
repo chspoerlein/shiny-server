@@ -40,10 +40,8 @@ colnames(labs) <- c("sitzung","frage","text","antwort1","antwort2","antwort3","a
 
 pam_pics <- c("P_Cat_1.jpeg","P_cat_2.jpeg","P_cat_3.jpeg","P_racoon_1.jpeg","P_racoon_2.jpeg","P_racoon_3.jpeg")
 
-test <- readRDS("shiny_app_token.rds")
-gs_auth(new_user = TRUE, gs_auth(token = test, cache=FALSE), cache=FALSE)
 
-#gs_auth(new_user = FALSE, gs_auth(token = "shiny_app_token.rds", cache=FALSE), cache=FALSE)
+gs_auth(new_user = TRUE, gs_auth(token = "shiny_app_token.rds", cache=FALSE), cache=FALSE)
 
 dat <- gs_key("1d6c-IT-AKqdmj2JUfm0LziqXLYOPXB7sBplvBVnViZE")
 dat_pam <- gs_key("1H7Bs-XHhRmkl5UUaA5nDivWYbvL4IJuHhr6HaruqQTA")
