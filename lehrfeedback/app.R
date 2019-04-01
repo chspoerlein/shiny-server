@@ -1,7 +1,8 @@
-library(dplyr)
-library(shiny)
-library(googlesheets)
-library(shinyjs)
+require(dplyr)
+require(shiny)
+require(googlesheets)
+#require(shinyjs)
+#require(V8)
 
 pam_pics <- c("P_Cat_1.jpeg","P_cat_2.jpeg","P_cat_3.jpeg","P_racoon_1.jpeg","P_racoon_2.jpeg","P_racoon_3.jpeg")
 
@@ -46,7 +47,7 @@ ui <- navbarPage("Feedback in der Lehre",
     tabPanel("Lernkontrolle", fluid=T,
              sidebarLayout(
                sidebarPanel(
-                 shinyjs::useShinyjs(),
+                 #shinyjs::useShinyjs(),
                  selectInput("sitzung2", "Titel der heutigen Sitzung", c(Auswählen = "",
                                                                         "Wiederholung II", "Bildungsungleichheit I: Kompetenzerwerb","Bildungsungleichheit II: Bildungsentscheidungen",
                                                                         "Bildungsungleichheit III: Ethnische Ungleichheit","Bildung und Berufseinstieg","Arbeitsmarktungleichheit I: Einkommen",
@@ -58,8 +59,8 @@ ui <- navbarPage("Feedback in der Lehre",
                  selectInput("frage1", "Frage 1", choices= c("","A", "B","C","D")), # selected = character(0)),
                  selectInput("frage2", "Frage 2", choices= c("","A", "B","C","D")),#selected = character(0)),
                  selectInput("frage3", "Frage 3", choices= c("","A", "B","C","D"))),#selected = character(0)),
-                 actionButton("saveBtn2","Antworten abgeben"),
-                 actionButton("resetinput","Reset")
+                 actionButton("saveBtn2","Antworten abgeben")#,
+                 #actionButton("resetinput","Reset")
                  
 
        ), 
@@ -217,9 +218,9 @@ server <- function(input, output, session) {
   
 })
     
-    observeEvent(input$resetinput, {
-      shinyjs::reset("sidepanel")
-    })
+    #observeEvent(input$resetinput, {
+    #  shinyjs::reset("sidepanel")
+    #})
      
     
     ######### Pamina
