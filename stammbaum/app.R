@@ -11,58 +11,117 @@ library(ggrepel)
 library(RColorBrewer)
 library(DT)
 
-#marker = list(color = colorRampPalette(brewer.pal(11,"Spectral"))(21))
 
-ui <- fluidPage(
-   
-   
-   titlePanel("Stammbaum Familie Spörlein"),
-   
-   # Sidebar with a slider input for number of bins 
-   sidebarLayout(
-     sidebarPanel(
-       radioButtons("hierarch", 
-                    "Hierarchischer Stammbaum?", c("ja"=1,"nein"=0), 1),
-       selectInput("auswahl",
-                    "Stammbaum beschränken auf Nachfahren von", choices = list(
-                      "keine Einschränkung"=c(4),
-                      "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
-                      "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
-       radioButtons("direkt", 
-                    "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
-      sliderInput("zeit", "Geburtsjahr:",
-                  min = 1530, max = 2020, step=10, sep="",
-                  value = c(1840,2020)),
-      radioButtons("zeitebene", 
-                   "Historische Ereignisse:", c("alle"="alle",
-                                               "international"="international",
-                                               "national"="national",
-                                               "regional"="regional"), "alle"),
-     br(),
-     helpText(a(href="https://cspoerlein.com", target="_blank", "© Christoph Spörlein"))
-   ),
-      
-      
-      mainPanel(
-        tabsetPanel(
-          tabPanel("Stammbaum",        
-                   visNetworkOutput("network")
-          ),
-          tabPanel("Regionale Herkunft",
-                   leafletOutput("herkunft")
-          ),
-          tabPanel("Vornamen",
-                   plotOutput('table')),
-          tabPanel("Historische Ereignisse",
-                   plotOutput("historie")),
-          tabPanel("Suche",
-                   dataTableOutput("suche"))
+ui <- navbarPage("Stammbaum Familie Spörlein",
+                 tabPanel("Stammbaum", fluid=T,
+                          sidebarLayout(
+                            sidebarPanel(
+                              radioButtons("hierarch", 
+                                           "Hierarchischer Stammbaum?", c("ja"=1,"nein"=0), 1),
+                              selectInput("auswahl",
+                                          "Stammbaum beschränken auf Nachfahren von", choices = list(
+                                            "keine Einschränkung"=c(4),
+                                            "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
+                                            "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
+                              radioButtons("direkt", 
+                                           "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
+                              sliderInput("zeit", "Geburtsjahr:",
+                                          min = 1530, max = 2020, step=10, sep="",
+                                          value = c(1840,2020)),
+                              br(),
+                              helpText(a(href="https://cspoerlein.com", target="_blank", "© Christoph Spörlein"))
+                            ), 
+                            mainPanel(
+                              visNetworkOutput("network")
+                            ))
+                 ),
+                 tabPanel("Regionale Herkunft", fluid=T,
+                          sidebarLayout(
+                            sidebarPanel(
+                              selectInput("auswahl",
+                                          "Stammbaum beschränken auf Nachfahren von", choices = list(
+                                            "keine Einschränkung"=c(4),
+                                            "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
+                                            "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
+                              radioButtons("direkt", 
+                                           "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
+                              sliderInput("zeit", "Geburtsjahr:",
+                                          min = 1530, max = 2020, step=10, sep="",
+                                          value = c(1840,2020)),
+                              br(),
+                              helpText(a(href="https://cspoerlein.com", target="_blank", "© Christoph Spörlein"))
+                            ), 
+                            mainPanel(
+                              leafletOutput("herkunft")
+                            ))
+                 ),
+                 tabPanel("Vornamen", fluid=T,
+                          sidebarLayout(
+                            sidebarPanel(
+                              selectInput("auswahl",
+                                          "Stammbaum beschränken auf Nachfahren von", choices = list(
+                                            "keine Einschränkung"=c(4),
+                                            "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
+                                            "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
+                              radioButtons("direkt", 
+                                           "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
+                              sliderInput("zeit", "Geburtsjahr:",
+                                          min = 1530, max = 2020, step=10, sep="",
+                                          value = c(1840,2020)),
+                              br(),
+                              helpText(a(href="https://cspoerlein.com", target="_blank", "© Christoph Spörlein"))
+                            ), 
+                            mainPanel(
+                              plotOutput('table')
+                            ))
+                 ),
+                 tabPanel("Historische Ereignisse", fluid=T,
+                          sidebarLayout(
+                            sidebarPanel(
+                              selectInput("auswahl",
+                                          "Stammbaum beschränken auf Nachfahren von", choices = list(
+                                            "keine Einschränkung"=c(4),
+                                            "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
+                                            "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
+                              radioButtons("direkt", 
+                                           "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
+                              sliderInput("zeit", "Geburtsjahr:",
+                                          min = 1530, max = 2020, step=10, sep="",
+                                          value = c(1840,2020)),
+                              radioButtons("zeitebene", 
+                                           "Historische Ereignisse:", c("alle"="alle",
+                                                                        "international"="international",
+                                                                        "national"="national",
+                                                                        "regional"="regional"), "alle"),
+                              br(),
+                              helpText(a(href="https://cspoerlein.com", target="_blank", "© Christoph Spörlein"))
+                            ), 
+                            mainPanel(
+                              plotOutput("historie")
+                            ))
+                 ),
+                 tabPanel("Suche", fluid=T,
+                          sidebarLayout(
+                            sidebarPanel(
+                              selectInput("auswahl",
+                                          "Stammbaum beschränken auf Nachfahren von", choices = list(
+                                            "keine Einschränkung"=c(4),
+                                            "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
+                                            "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
+                              radioButtons("direkt", 
+                                           "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
+                              sliderInput("zeit", "Geburtsjahr:",
+                                          min = 1530, max = 2020, step=10, sep="",
+                                          value = c(1840,2020)),
+                              br(),
+                              helpText(a(href="https://cspoerlein.com", target="_blank", "© Christoph Spörlein"))
+                            ), 
+                            mainPanel(
+                              dataTableOutput("suche")
+                            ))
+                 )
+)
 
-    
-      )
-   )
-)
-)
 
 server <- function(input, output) {
    
