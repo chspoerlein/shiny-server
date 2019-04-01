@@ -3,6 +3,7 @@ require(shiny)
 require(googlesheets)
 #require(shinyjs)
 #require(V8)
+#data <- readRDS("dat.rds")
 
 labs <- as.data.frame(matrix(c("Wiederholung II","frage1","Frage 1: Warum setzt sich die deutsche Bevölkerung zu 51% aus Frauen zusammen?",
                                "A) weil mehr Mädchen als Jungs geboren werden.",
@@ -41,12 +42,20 @@ colnames(labs) <- c("sitzung","frage","text","antwort1","antwort2","antwort3","a
 pam_pics <- c("P_Cat_1.jpeg","P_cat_2.jpeg","P_cat_3.jpeg","P_racoon_1.jpeg","P_racoon_2.jpeg","P_racoon_3.jpeg")
 
 
-gs_auth(new_user = FALSE, gs_auth(token = "shiny_app_token.rds", cache=FALSE), cache=FALSE)
+#gs_auth(new_user = FALSE, gs_auth(token = "shiny_app_token.rds", cache=FALSE), cache=FALSE)
 
-dat <- gs_key("1d6c-IT-AKqdmj2JUfm0LziqXLYOPXB7sBplvBVnViZE")
-dat_pam <- gs_key("1H7Bs-XHhRmkl5UUaA5nDivWYbvL4IJuHhr6HaruqQTA")
+#dat <- gs_key("1d6c-IT-AKqdmj2JUfm0LziqXLYOPXB7sBplvBVnViZE")
+#dat_pam <- gs_key("1H7Bs-XHhRmkl5UUaA5nDivWYbvL4IJuHhr6HaruqQTA")
 
 #load("add_data.RData")
+
+#dat2 <- as.data.frame(matrix(c(0,0,0,0,0,0,0,0,0,0,0), ncol=11))
+#colnames(dat2) <- c("sitzung3","gruppe","slider21","slider22","slider23","text21","slider24","text22","slider25","text23","system.time")
+
+
+dat <- readRDS("dat.rds")
+dat2 <- readRDS("dat2.rds")
+
 
 ui <- navbarPage("Feedback in der Lehre",
                  
@@ -151,9 +160,11 @@ server <- function(input, output, session) {
   
   #This will add the new row at the bottom of the dataset in Google Sheets.
   
-  observeEvent(input$saveBtn, {                                                                 
-    dat <- dat %>%                                                                     
-      gs_add_row(ws = "Data", input = Results()) 
+  observeEvent(input$saveBtn, { 
+    dat <- rbind(dat,Results())
+    saveRDS(dat,"dat.rds")
+    #dat <- dat %>%                                                                     
+      #gs_add_row(ws = "Data", input = Results()) 
     
     output$danke <- renderImage({
       picname <- "thankyoucat-680x680.jpg"
@@ -266,9 +277,11 @@ server <- function(input, output, session) {
     
     #This will add the new row at the bottom of the dataset in Google Sheets.
     
-    observeEvent(input$saveBtn3, {                                                                 
-      dat_pam <- dat_pam %>%                                                                     
-        gs_add_row(ws = "Data", input = Results2()) 
+    observeEvent(input$saveBtn3, {  
+      dat2 <- rbind(dat2,Results2())
+      saveRDS(dat2,"dat2.rds")
+      #dat_pam <- dat_pam %>%                                                                     
+       # gs_add_row(ws = "Data", input = Results2()) 
       
       output$danke_pamina <- renderImage({
         
