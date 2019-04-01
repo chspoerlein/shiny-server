@@ -11,7 +11,7 @@ gs_auth(new_user = FALSE, gs_auth(token = "shiny_app_token.rds"))
 dat <- gs_key("1d6c-IT-AKqdmj2JUfm0LziqXLYOPXB7sBplvBVnViZE")
 dat_pam <- gs_key("1H7Bs-XHhRmkl5UUaA5nDivWYbvL4IJuHhr6HaruqQTA")
 
-load("add_data.RData")
+#load("add_data.RData")
 
 ui <- navbarPage("Feedback in der Lehre",
                  
