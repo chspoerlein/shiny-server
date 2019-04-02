@@ -18,14 +18,14 @@ ui <- navbarPage("Stammbaum Familie Spörlein",
                             sidebarPanel(
                               radioButtons("hierarch", 
                                            "Hierarchischer Stammbaum?", c("ja"=1,"nein"=0), 1),
-                              selectInput("auswahl",
+                              selectInput("auswahl1",
                                           "Stammbaum beschränken auf Nachfahren von", choices = list(
                                             "keine Einschränkung"=c(4),
                                             "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
                                             "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
-                              radioButtons("direkt", 
+                              radioButtons("direkt1", 
                                            "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
-                              sliderInput("zeit", "Geburtsjahr:",
+                              sliderInput("zeit1", "Geburtsjahr:",
                                           min = 1530, max = 2020, step=10, sep="",
                                           value = c(1840,2020)),
                               br(),
@@ -38,14 +38,14 @@ ui <- navbarPage("Stammbaum Familie Spörlein",
                  tabPanel("Regionale Herkunft", fluid=T,
                           sidebarLayout(
                             sidebarPanel(
-                              selectInput("auswahl",
+                              selectInput("auswahl2",
                                           "Stammbaum beschränken auf Nachfahren von", choices = list(
                                             "keine Einschränkung"=c(4),
                                             "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
                                             "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
-                              radioButtons("direkt", 
+                              radioButtons("direkt2", 
                                            "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
-                              sliderInput("zeit", "Geburtsjahr:",
+                              sliderInput("zeit2", "Geburtsjahr:",
                                           min = 1530, max = 2020, step=10, sep="",
                                           value = c(1840,2020)),
                               br(),
@@ -58,14 +58,14 @@ ui <- navbarPage("Stammbaum Familie Spörlein",
                  tabPanel("Vornamen", fluid=T,
                           sidebarLayout(
                             sidebarPanel(
-                              selectInput("auswahl",
+                              selectInput("auswahl3",
                                           "Stammbaum beschränken auf Nachfahren von", choices = list(
                                             "keine Einschränkung"=c(4),
                                             "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
                                             "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
-                              radioButtons("direkt", 
+                              radioButtons("direkt3", 
                                            "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
-                              sliderInput("zeit", "Geburtsjahr:",
+                              sliderInput("zeit3", "Geburtsjahr:",
                                           min = 1530, max = 2020, step=10, sep="",
                                           value = c(1840,2020)),
                               br(),
@@ -78,14 +78,14 @@ ui <- navbarPage("Stammbaum Familie Spörlein",
                  tabPanel("Historische Ereignisse", fluid=T,
                           sidebarLayout(
                             sidebarPanel(
-                              selectInput("auswahl",
+                              selectInput("auswahl4",
                                           "Stammbaum beschränken auf Nachfahren von", choices = list(
                                             "keine Einschränkung"=c(4),
                                             "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
                                             "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
-                              radioButtons("direkt", 
+                              radioButtons("direkt4", 
                                            "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
-                              sliderInput("zeit", "Geburtsjahr:",
+                              sliderInput("zeit4", "Geburtsjahr:",
                                           min = 1530, max = 2020, step=10, sep="",
                                           value = c(1840,2020)),
                               radioButtons("zeitebene", 
@@ -103,14 +103,14 @@ ui <- navbarPage("Stammbaum Familie Spörlein",
                  tabPanel("Suche", fluid=T,
                           sidebarLayout(
                             sidebarPanel(
-                              selectInput("auswahl",
+                              selectInput("auswahl5",
                                           "Stammbaum beschränken auf Nachfahren von", choices = list(
                                             "keine Einschränkung"=c(4),
                                             "Spörlein:"=c("Christoph"=1, "Wilhelm"=2, "Karola"=3),
                                             "Feigl:"=c("Eliana"=-1,"Ulrich"=-2,"Susanne"=-3))),
-                              radioButtons("direkt", 
+                              radioButtons("direkt5", 
                                            "Nur direkte Nachfahren?", c("ja"=1,"nein"=0), 1),
-                              sliderInput("zeit", "Geburtsjahr:",
+                              sliderInput("zeit5", "Geburtsjahr:",
                                           min = 1530, max = 2020, step=10, sep="",
                                           value = c(1840,2020)),
                               br(),
@@ -131,23 +131,23 @@ server <- function(input, output) {
      
      
      people <- read.csv("personen_prep.csv", sep=";", stringsAsFactors=FALSE) %>% 
-       filter(newbirthdate>=input$zeit[1] & newbirthdate<=input$zeit[2]) %>%
-       filter(direkte>=input$direkt)
+       filter(newbirthdate>=input$zeit1[1] & newbirthdate<=input$zeit1[2]) %>%
+       filter(direkte>=input$direkt1)
      marriages <- read.csv("heiraten.csv", sep=";", stringsAsFactors=FALSE)
      births <- read.csv("geburten.csv", sep=";", stringsAsFactors=FALSE) %>% left_join(people, by=c("kind_new"="id")) %>%
        select(mutter_new,kind_new,start) %>% rename(bdate=start)
      
-     if (input$auswahl==-1){
+     if (input$auswahl1==-1){
        people <- people %>% filter(vergleich<=-1)
-     } else if (input$auswahl==-2){
+     } else if (input$auswahl1==-2){
        people <- people %>% filter(vergleich==-2)
-     } else if (input$auswahl==-3){
+     } else if (input$auswahl1==-3){
        people <- people %>% filter(vergleich==-3)
-     } else if (input$auswahl==1){
+     } else if (input$auswahl1==1){
        people <- people %>% filter(vergleich>=1)
-     } else if (input$auswahl==2){
+     } else if (input$auswahl1==2){
        people <- people %>% filter(vergleich==2)
-     } else if (input$auswahl==3){
+     } else if (input$auswahl1==3){
        people <- people %>% filter(vergleich==3)
      } else {
        people <- people
@@ -235,20 +235,20 @@ server <- function(input, output) {
      pdat$lon <- str_replace(pdat$lon,",",".")
      
      people <- read.csv2("personen_prep.csv", stringsAsFactors =F)  %>% 
-       filter(newbirthdate>=input$zeit[1] & newbirthdate<=input$zeit[2]) %>%
-       filter(direkte>=input$direkt)
+       filter(newbirthdate>=input$zeit2[1] & newbirthdate<=input$zeit2[2]) %>%
+       filter(direkte>=input$direkt2)
      
-     if (input$auswahl==-1){
+     if (input$auswahl2==-1){
        people <- people %>% filter(vergleich<=-1)
-     } else if (input$auswahl==-2){
+     } else if (input$auswahl2==-2){
        people <- people %>% filter(vergleich==-2)
-     } else if (input$auswahl==-3){
+     } else if (input$auswahl2==-3){
        people <- people %>% filter(vergleich==-3)
-     } else if (input$auswahl==1){
+     } else if (input$auswahl2==1){
        people <- people %>% filter(vergleich>=1)
-     } else if (input$auswahl==2){
+     } else if (input$auswahl2==2){
        people <- people %>% filter(vergleich==2)
-     } else if (input$auswahl==3){
+     } else if (input$auswahl2==3){
        people <- people %>% filter(vergleich==3)
      } else {
        people <- people
@@ -279,20 +279,20 @@ server <- function(input, output) {
    
    output$table <- renderPlot({
      people <- read.csv2("personen_prep.csv", stringsAsFactors =F)  %>% 
-       filter(newbirthdate>=input$zeit[1] & newbirthdate<=input$zeit[2]) %>%
-       filter(direkte>=input$direkt)
+       filter(newbirthdate>=input$zeit3[1] & newbirthdate<=input$zeit3[2]) %>%
+       filter(direkte>=input$direkt3)
      
-     if (input$auswahl==-1){
+     if (input$auswahl3==-1){
        people <- people %>% filter(vergleich<=-1)
-     } else if (input$auswahl==-2){
+     } else if (input$auswahl3==-2){
        people <- people %>% filter(vergleich==-2)
-     } else if (input$auswahl==-3){
+     } else if (input$auswahl3==-3){
        people <- people %>% filter(vergleich==-3)
-     } else if (input$auswahl==1){
+     } else if (input$auswahl3==1){
        people <- people %>% filter(vergleich>=1)
-     } else if (input$auswahl==2){
+     } else if (input$auswahl3==2){
        people <- people %>% filter(vergleich==2)
-     } else if (input$auswahl==3){
+     } else if (input$auswahl3==3){
        people <- people %>% filter(vergleich==3)
      } else {
        people <- people
@@ -317,9 +317,9 @@ server <- function(input, output) {
      zeit <- read.csv("historisches.csv", sep=";", stringsAsFactors=FALSE) 
      zeit$beginn <- dmy(zeit$beginn)
      zeit$ende <- dmy(zeit$ende) 
-     zeit <- zeit %>% filter(year(ende)>=input$zeit[1]) %>%
-       mutate(ende=replace(ende, (year(ende)>input$zeit[2]) & (year(ende)>input$zeit[1]),paste0(input$zeit[2],"-01-01"))) %>%
-       mutate(beginn=replace(beginn, (year(beginn)<input$zeit[1]),paste0(input$zeit[1],"-01-01"))) 
+     zeit <- zeit %>% filter(year(ende)>=input$zeit4[1]) %>%
+       mutate(ende=replace(ende, (year(ende)>input$zeit4[2]) & (year(ende)>input$zeit4[1]),paste0(input$zeit4[2],"-01-01"))) %>%
+       mutate(beginn=replace(beginn, (year(beginn)<input$zeit4[1]),paste0(input$zeit4[1],"-01-01"))) 
        
      
        
@@ -327,27 +327,27 @@ server <- function(input, output) {
      people <- read.csv("personen_prep.csv", sep=";", stringsAsFactors=FALSE) %>%
        filter(start!="", (end!="" | newbirthdate>=1900)) %>% 
        #filter(newbirthdate>=input$zeit[1] & newbirthdate<=input$zeit[2]) %>%
-       filter(direkte==input$direkt) 
+       filter(direkte==input$direkt4) 
     
           
      people <- people %>%
        mutate(end2=replace(end2, is.na(end2) & newbirthdate>=1900, as.character(Sys.Date()))) %>%
-       mutate(end2=replace(end2, end2>input$zeit[2],paste0(input$zeit[2],"-01-01"))) %>%
-       mutate(newbirthdate=replace(newbirthdate, start2<input$zeit[1] & end2>input$zeit[1],input$zeit[1])) %>%
-       mutate(start2=replace(start2, start2<input$zeit[1] & end2>input$zeit[1],paste0(input$zeit[1],"-01-01"))) %>%
-       filter(newbirthdate>=input$zeit[1] & newbirthdate<=input$zeit[2])
+       mutate(end2=replace(end2, end2>input$zeit[2],paste0(input$zeit4[2],"-01-01"))) %>%
+       mutate(newbirthdate=replace(newbirthdate, start2<input$zeit4[1] & end2>input$zeit4[1],input$zeit4[1])) %>%
+       mutate(start2=replace(start2, start2<input$zeit4[1] & end2>input$zeit4[1],paste0(input$zeit4[1],"-01-01"))) %>%
+       filter(newbirthdate>=input$zeit4[1] & newbirthdate<=input$zeit4[2])
      
-     if (input$auswahl==-1){
+     if (input$auswahl4==-1){
        people <- people %>% filter(vergleich<=-1)
-     } else if (input$auswahl==-2){
+     } else if (input$auswahl4==-2){
        people <- people %>% filter(vergleich==-2)
-     } else if (input$auswahl==-3){
+     } else if (input$auswahl4==-3){
        people <- people %>% filter(vergleich==-3)
-     } else if (input$auswahl==1){
+     } else if (input$auswahl4==1){
        people <- people %>% filter(vergleich>=1)
-     } else if (input$auswahl==2){
+     } else if (input$auswahl4==2){
        people <- people %>% filter(vergleich==2)
-     } else if (input$auswahl==3){
+     } else if (input$auswahl4==3){
        people <- people %>% filter(vergleich==3)
      } else {
        people <- people
@@ -374,7 +374,7 @@ server <- function(input, output) {
        scale_y_discrete(labels=people$name) +
        ylab("") + 
        xlab("") + 
-       xlim(input$zeit[1],input$zeit[2]) +
+       xlim(input$zeit4[1],input$zeit4[2]) +
        geom_rect(aes(xmin = year(zeit$beginn) , ymin = -Inf, xmax = year(zeit$ende), ymax = Inf, fill=colorRampPalette(brewer.pal(11,"Spectral"))(nrow(zeit)), colour=colorRampPalette(brewer.pal(11,"Spectral"))(nrow(zeit))), alpha=.5, size=2) +
        theme(legend.position = "None") +
        geom_label_repel(aes(y = as.character(length(unique(people$id))), 
@@ -392,20 +392,20 @@ server <- function(input, output) {
    
    output$suche <- DT::renderDataTable({
      people <- read.csv2("personen_prep.csv", stringsAsFactors =F)  %>% 
-       filter(newbirthdate>=input$zeit[1] & newbirthdate<=input$zeit[2])%>%
-       filter(direkte>=input$direkt)
+       filter(newbirthdate>=input$zeit5[1] & newbirthdate<=input$zeit5[2])%>%
+       filter(direkte>=input$direkt5)
     
-      if (input$auswahl==-1){
+      if (input$auswahl5==-1){
        people <- people %>% filter(vergleich<=-1)
-     } else if (input$auswahl==-2){
+     } else if (input$auswahl5==-2){
        people <- people %>% filter(vergleich==-2)
-     } else if (input$auswahl==-3){
+     } else if (input$auswahl5==-3){
        people <- people %>% filter(vergleich==-3)
-     } else if (input$auswahl==1){
+     } else if (input$auswahl5==1){
        people <- people %>% filter(vergleich>=1)
-     } else if (input$auswahl==2){
+     } else if (input$auswahl5==2){
        people <- people %>% filter(vergleich==2)
-     } else if (input$auswahl==3){
+     } else if (input$auswahl5==3){
        people <- people %>% filter(vergleich==3)
      } else {
        people <- people
