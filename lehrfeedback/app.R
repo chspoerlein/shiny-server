@@ -1,6 +1,6 @@
 require(dplyr)
 require(shiny)
-require(googlesheets)
+#require(googlesheets)
 #require(shinyjs)
 #require(V8)
 #data <- readRDS("dat.rds")
