@@ -1,9 +1,25 @@
 require(dplyr)
 require(shiny)
+library(rdrop2)
 #require(googlesheets)
 #require(shinyjs)
 #require(V8)
 #data <- readRDS("dat.rds")
+
+
+#token <- drop_auth()
+#saveRDS(token, "droptoken.rds")
+# Upload droptoken to your server
+# ******** WARNING ********
+# Losing this file will give anyone 
+# complete control of your Dropbox account
+# You can then revoke the rdrop2 app from your
+# dropbox account and start over.
+# ******** WARNING ********
+# read it back with readRDS
+token <- readRDS("droptoken.rds")
+# Then pass the token to each drop_ function
+drop_acc(dtoken = token)
 
 labs <- as.data.frame(matrix(c("Wiederholung II","frage1","Frage 1: Warum setzt sich die deutsche Bevölkerung zu 51% aus Frauen zusammen?",
                                "A) weil mehr Mädchen als Jungs geboren werden.",
@@ -53,8 +69,10 @@ pam_pics <- c("P_Cat_1.jpeg","P_cat_2.jpeg","P_cat_3.jpeg","P_racoon_1.jpeg","P_
 #colnames(dat2) <- c("sitzung3","gruppe","slider21","slider22","slider23","text21","slider24","text22","slider25","text23","system.time")
 
 
-dat <- readRDS("dat.rds")
-dat2 <- readRDS("dat2.rds")
+#dat <- readRDS("dat.rds")
+#dat2 <- readRDS("dat2.rds")
+
+dat <- drop_read_csv("responses/sozstruk19.csv")
 
 
 ui <- navbarPage("Feedback in der Lehre",
@@ -162,7 +180,9 @@ server <- function(input, output, session) {
   
   observeEvent(input$saveBtn, { 
     dat <- rbind(dat,Results())
-    saveRDS(dat,"dat.rds")
+    write.csv(dat, file = "sozstruk19.csv",row.names = FALSE)
+   drop_upload("sozstruk19.csv", path = "responses")
+    #saveRDS(dat,"dat.rds")
     #dat <- dat %>%                                                                     
       #gs_add_row(ws = "Data", input = Results()) 
     
