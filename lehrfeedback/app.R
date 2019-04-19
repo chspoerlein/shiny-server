@@ -193,7 +193,6 @@ pam_pics <- c("P_Cat_1.jpeg","P_cat_2.jpeg","P_cat_3.jpeg","P_racoon_1.jpeg","P_
 dat <- readRDS("dat.rds")
 dat2 <- readRDS("dat2.rds")
 
-#dat <- drop_read_csv("responses/sozstruk19.csv")
 
 
 ui <- navbarPage("Feedback in der Lehre",
@@ -438,4 +437,5 @@ server <- function(input, output, session) {
 
 # Run the application 
 shinyApp(ui = ui, server = server)
+
 
