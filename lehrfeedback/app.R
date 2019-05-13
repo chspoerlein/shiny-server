@@ -206,10 +206,10 @@ ui <- navbarPage("Feedback in der Lehre",
     sidebarLayout(
        sidebarPanel(
        
-         selectInput("sitzung", "Titel der heutigen Sitzung", c(Auswählen = "","Bildungsungleichheit I: Kompetenzerwerb","Bildungsungleichheit II: Bildungsentscheidungen",
+         selectInput("sitzung", "Titel der heutigen Sitzung", c(Auswählen = "","Bildungsungleichheit II: Bildungsentscheidungen",
              "Bildungsungleichheit III: Ethnische Ungleichheit","Bildung und Berufseinstieg","Arbeitsmarktungleichheit I: Einkommen",
              "Arbeitsmarktungleichheit II: Geschlechterungleichheit","Arbeitsmarktungleichheit III: Ethnische Ungleichheit",
-             "Partnerwahl und Heiratsmuster","Wandel der Haushalts- und Familienstruktur"), selected="Bildungsungleichheit I: Kompetenzerwerb"),
+             "Partnerwahl und Heiratsmuster","Wandel der Haushalts- und Familienstruktur"), selected="Bildungsungleichheit II: Bildungsentscheidungen"),
          helpText("Wie bewerten Sie die folgenden Aspekte der heutigen Veranstaltung?"),
         sliderInput("slider1","Gliederung",0,10,5),
         sliderInput("slider2","Inhalte sind nachvollziehbar",0,10,5),
@@ -265,10 +265,10 @@ tabPanel("Evaluation Tutorium", fluid=T,
           sidebarLayout(
             sidebarPanel(
               
-              selectInput("sitzung3", "Titel der heutigen Sitzung", c(Auswählen = "","Bildungsungleichheit I: Kompetenzerwerb","Bildungsungleichheit II: Bildungsentscheidungen",
+              selectInput("sitzung3", "Titel der heutigen Sitzung", c(Auswählen = "","Bildungsungleichheit II: Bildungsentscheidungen",
                                                                      "Bildungsungleichheit III: Ethnische Ungleichheit","Bildung und Berufseinstieg","Arbeitsmarktungleichheit I: Einkommen",
                                                                      "Arbeitsmarktungleichheit II: Geschlechterungleichheit","Arbeitsmarktungleichheit III: Ethnische Ungleichheit",
-                                                                     "Partnerwahl und Heiratsmuster","Wandel der Haushalts- und Familienstruktur"), selected="Bildungsungleichheit I: Kompetenzerwerb"),
+                                                                     "Partnerwahl und Heiratsmuster","Wandel der Haushalts- und Familienstruktur"), selected="Bildungsungleichheit II: Bildungsentscheidungen"),
               radioButtons("gruppe", "Gruppe", choices= c("Mittwoch", "Donnerstag")),
               helpText("Wie bewerten Sie die folgenden Aspekte der heutigen Veranstaltung?"),
               sliderInput("slider21","Gliederung",0,10,5),
