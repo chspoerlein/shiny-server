@@ -206,10 +206,9 @@ ui <- navbarPage("Feedback in der Lehre",
     sidebarLayout(
        sidebarPanel(
        
-         selectInput("sitzung", "Titel der heutigen Sitzung", c(Auswählen = "","Bildungsungleichheit II: Bildungsentscheidungen",
-             "Bildungsungleichheit III: Ethnische Ungleichheit","Bildung und Berufseinstieg","Arbeitsmarktungleichheit I: Einkommen",
+         selectInput("sitzung", "Titel der heutigen Sitzung", c(Auswählen = "","Bildung und Berufseinstieg","Arbeitsmarktungleichheit I: Einkommen",
              "Arbeitsmarktungleichheit II: Geschlechterungleichheit","Arbeitsmarktungleichheit III: Ethnische Ungleichheit",
-             "Partnerwahl und Heiratsmuster","Wandel der Haushalts- und Familienstruktur"), selected="Bildungsungleichheit II: Bildungsentscheidungen"),
+             "Partnerwahl und Heiratsmuster","Wandel der Haushalts- und Familienstruktur"), selected="Bildung und Berufseinstieg"),
          helpText("Wie bewerten Sie die folgenden Aspekte der heutigen Veranstaltung?"),
         sliderInput("slider1","Gliederung",0,10,5),
         sliderInput("slider2","Inhalte sind nachvollziehbar",0,10,5),
